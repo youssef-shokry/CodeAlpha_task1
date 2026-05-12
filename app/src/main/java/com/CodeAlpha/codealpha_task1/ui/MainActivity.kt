@@ -25,21 +25,18 @@ class MainActivity : AppCompatActivity() {
 
         cards = getCardsList(this).toMutableList()
 
-        // Restore state after rotation
         savedInstanceState?.let {
             index = it.getInt("current_index", 0)
             isCardFlipped = it.getBoolean("is_flipped", false)
         }
 
-        // Safety check
+
         if (cards.isEmpty()) {
-            // TODO: Show empty state message or disable buttons
             binding.cardText.text = "No cards available"
             binding.cardButton.isEnabled = false
             return
         }
 
-        // Ensure index is valid
         if (index >= cards.size) index = 0
 
         showCurrentCard()
@@ -84,13 +81,12 @@ class MainActivity : AppCompatActivity() {
 
     private fun resetToQuestionSide() {
         isCardFlipped = false
-        // No animation needed when navigating
     }
 
     private fun flipCard() {
         isCardFlipped = !isCardFlipped
         animationEffect()
-        showCurrentCard()           // Update text after starting animation
+        showCurrentCard()
     }
 
     private fun animationEffect() {
@@ -99,7 +95,6 @@ class MainActivity : AppCompatActivity() {
             rotationYBy(180f)
         }.start()
 
-        // Optional: You can animate text and button too if you like the effect
         binding.cardText.animate().apply {
             duration = 600
             rotationYBy(180f)
@@ -116,9 +111,8 @@ class MainActivity : AppCompatActivity() {
         addFragment.show(supportFragmentManager, "AddFragment")
 
         addFragment.cardSubmitted = object : CardSubmitted {
-            override fun onCardSubmitted(newCard: CardDataModel) {
-                // Add at the beginning (you can change to .add() for end)
-                cards.add(0, newCard)
+            override fun onCardSubmitted(card: CardDataModel) {
+                cards.add(0, card)
                 index = 0
                 isCardFlipped = false
                 showCurrentCard()
