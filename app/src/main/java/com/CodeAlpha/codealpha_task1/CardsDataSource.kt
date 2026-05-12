@@ -1,15 +1,13 @@
 package com.CodeAlpha.codealpha_task1
 
 import android.content.Context
-import com.CodeAlpha.codealpha_task1.models.Cards
-import kotlin.also
+import com.CodeAlpha.codealpha_task1.models.CardDataModel
 
 object CardsDataSource {
-    private val questionsList: MutableList<String> = mutableListOf()
-    private val answersList: MutableList<String>  = mutableListOf()
+    private val cardDataModelList: MutableList<CardDataModel> = mutableListOf()
     private var isLoaded = false
 
-    private fun initCardsList(context: Context){
+    private fun initCardsList(context: Context) {
         if (isLoaded) return
 
         val questionsInputStream = context.applicationContext.assets.open("questions.txt")
@@ -18,28 +16,26 @@ object CardsDataSource {
         val answersInputStream = context.applicationContext.assets.open("answers.txt")
         val answersReader = answersInputStream.bufferedReader()
 
-        var questionsLine = questionsReader.readLine()
-        var answersLine = answersReader.readLine()
+        var questionLine = questionsReader.readLine()
+        var answerLine = answersReader.readLine()
 
-        while (questionsLine != null){
-            questionsList.add(questionsLine.trim())
-            answersList.add(answersLine.trim())
-            questionsLine = questionsReader.readLine()
-            answersLine = answersReader.readLine()
+        while (questionLine != null && answerLine != null) {
+            cardDataModelList.add(
+                CardDataModel(
+                    questionLine.trim(),
+                    answerLine.trim()
+                )
+            )
+
+            questionLine = questionsReader.readLine()
+            answerLine = answersReader.readLine()
         }
-        questionsList.toList()
-        answersList.toList()
 
         isLoaded = true
     }
 
-    private val cardsList: List<Cards> = mutableListOf<Cards>().also { cardsList ->
-        for(i in 0 until answersList.size){
-            cardsList.add(Cards(questionsList[i], answersList[i]))
-        }
-    }.toList()
-    fun getCardsList(context: Context): List<Cards>{
+    fun getCardsList(context: Context): List<CardDataModel> {
         initCardsList(context)
-        return cardsList
+        return cardDataModelList
     }
 }
