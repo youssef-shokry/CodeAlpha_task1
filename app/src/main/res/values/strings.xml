@@ -1,8 +1,8 @@
 <resources>
-    <string name="app_name">CodeAlpha_Task1</string>
+    <string name="app_name">code_alpha_first_task</string>
     <string name="previous">Previous</string>
     <string name="next">Next</string>
     <string name="show_answer">Show Answer</string>
-    <!-- TODO: Remove or change this placeholder text -->
-    <string name="hello_blank_fragment">Hello blank fragment</string>
+    <string name="remove_card">Remove Card</string>
+    <string name="edit_card">Edit Card</string>
 </resources>

@@ -5,8 +5,12 @@ import androidx.appcompat.app.AppCompatActivity
 import com.CodeAlpha.codealpha_task1.CardsDataSource.getCardsList
 import com.CodeAlpha.codealpha_task1.databinding.ActivityMainBinding
 import com.CodeAlpha.codealpha_task1.models.CardDataModel
+import com.CodeAlpha.codealpha_task1.ui.action_fragment.ActionFragment
+import com.CodeAlpha.codealpha_task1.ui.action_fragment.CardAction
 import com.CodeAlpha.codealpha_task1.ui.add_fragment.AddFragment
 import com.CodeAlpha.codealpha_task1.ui.add_fragment.CardSubmitted
+import com.CodeAlpha.codealpha_task1.ui.edit_fragment.CardEdited
+import com.CodeAlpha.codealpha_task1.ui.edit_fragment.EditFragment
 
 class MainActivity : AppCompatActivity() {
 
@@ -30,9 +34,9 @@ class MainActivity : AppCompatActivity() {
             isCardFlipped = it.getBoolean("is_flipped", false)
         }
 
-
         if (cards.isEmpty()) {
-            binding.cardText.text = "No cards available"
+            val message = "No cards available"
+            binding.cardText.text = message
             binding.cardButton.isEnabled = false
             return
         }
@@ -61,6 +65,7 @@ class MainActivity : AppCompatActivity() {
         binding.previousButton.setOnClickListener { goToPreviousCard() }
         binding.addButton.setOnClickListener { showAddFragment() }
         binding.cardButton.setOnClickListener { flipCard() }
+        binding.actionIcon.setOnClickListener { showActionFragment() }
     }
 
     private fun goToNextCard() {
@@ -114,6 +119,57 @@ class MainActivity : AppCompatActivity() {
             override fun onCardSubmitted(card: CardDataModel) {
                 cards.add(0, card)
                 index = 0
+                isCardFlipped = false
+                showCurrentCard()
+            }
+        }
+    }
+
+    private fun showActionFragment() {
+        if (cards.isEmpty()) return
+
+        val actionFragment = ActionFragment()
+        actionFragment.show(supportFragmentManager, "ActionFragment")
+
+        actionFragment.cardAction = object : CardAction {
+            override fun onRemoveCard() {
+                removeCurrentCard()
+            }
+
+            override fun onEditCard() {
+                showEditFragment()
+            }
+        }
+    }
+
+    private fun removeCurrentCard() {
+        if (cards.isEmpty()) return
+
+        cards.removeAt(index)
+
+        if (cards.isEmpty()) {
+            val message = "No cards available"
+            binding.cardText.text = message
+            binding.cardButton.isEnabled = false
+            return
+        }
+
+        if (index >= cards.size) index = cards.size - 1
+
+        isCardFlipped = false
+        showCurrentCard()
+    }
+
+    private fun showEditFragment() {
+        if (cards.isEmpty()) return
+
+        val editFragment = EditFragment()
+        editFragment.setCurrentCard(cards[index])
+        editFragment.show(supportFragmentManager, "EditFragment")
+
+        editFragment.cardEdited = object : CardEdited {
+            override fun onCardEdited(card: CardDataModel) {
+                cards[index] = card
                 isCardFlipped = false
                 showCurrentCard()
             }
