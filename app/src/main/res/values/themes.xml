@@ -1,0 +1,9 @@
+<resources xmlns:tools="http://schemas.android.com/tools">
+    <!-- Base application theme. -->
+    <style name="Base.Theme.CodeAlpha_Task1" parent="Theme.Material3.DayNight.NoActionBar">
+        <item name="android:colorPrimary">@color/soft_gray</item>
+        <item name="android:windowBackground">@color/midnight_blue</item>
+    </style>
+
+    <style name="Theme.CodeAlpha_Task1" parent="Base.Theme.CodeAlpha_Task1" />
+</resources>
