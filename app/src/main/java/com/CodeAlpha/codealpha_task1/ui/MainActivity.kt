@@ -35,7 +35,8 @@ class MainActivity : AppCompatActivity() {
         }
 
         if (cards.isEmpty()) {
-            binding.cardText.text = "No cards available"
+            val message = "No cards available"
+            binding.cardText.text = message
             binding.cardButton.isEnabled = false
             return
         }
@@ -147,7 +148,8 @@ class MainActivity : AppCompatActivity() {
         cards.removeAt(index)
 
         if (cards.isEmpty()) {
-            binding.cardText.text = "No cards available"
+            val message = "No cards available"
+            binding.cardText.text = message
             binding.cardButton.isEnabled = false
             return
         }
