@@ -1,0 +1,51 @@
+<?xml version="1.0" encoding="utf-8"?>
+<com.google.android.material.card.MaterialCardView xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    tools:context=".ui.action_fragment.ActionFragment"
+    android:backgroundTint="@color/soft_gray">
+
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:padding="10dp">
+
+        <com.google.android.material.button.MaterialButton
+            android:id="@+id/edit_button"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:backgroundTint="@color/midnight_blue"
+            android:text="Edit Card"
+            android:textStyle="bold"
+            android:textSize="16sp"
+            android:textColor="@color/light_silver"
+            app:cornerRadius="14dp"
+            app:layout_constraintTop_toTopOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            android:layout_marginTop="8dp"
+            android:padding="16dp" />
+
+        <com.google.android.material.button.MaterialButton
+            android:id="@+id/remove_button"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:backgroundTint="#C0392B"
+            android:text="Remove Card"
+            android:textStyle="bold"
+            android:textSize="16sp"
+            android:textColor="@color/light_silver"
+            app:cornerRadius="14dp"
+            app:layout_constraintTop_toBottomOf="@id/edit_button"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintBottom_toBottomOf="parent"
+            android:layout_marginTop="12dp"
+            android:layout_marginBottom="8dp"
+            android:padding="16dp" />
+
+    </androidx.constraintlayout.widget.ConstraintLayout>
+
+</com.google.android.material.card.MaterialCardView>
