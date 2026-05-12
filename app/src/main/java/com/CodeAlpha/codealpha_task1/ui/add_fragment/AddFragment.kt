@@ -29,10 +29,9 @@ class AddFragment : BottomSheetDialogFragment() {
             question = binding.questionEditTextLayout.editText?.text.toString()
             answer = binding.answerEditTextLayout.editText?.text.toString()
 
+            passData()
             dismissNow()
         }
-
-        passData()
     }
 
     fun passData(){

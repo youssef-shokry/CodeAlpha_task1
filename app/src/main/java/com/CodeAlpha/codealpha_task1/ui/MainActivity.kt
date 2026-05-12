@@ -1,6 +1,7 @@
 package com.CodeAlpha.codealpha_task1.ui
 
 import android.os.Bundle
+import android.util.Log
 import androidx.appcompat.app.AppCompatActivity
 import com.CodeAlpha.codealpha_task1.CardsDataSource.getCardsList
 import com.CodeAlpha.codealpha_task1.databinding.ActivityMainBinding
@@ -11,6 +12,7 @@ import com.CodeAlpha.codealpha_task1.ui.add_fragment.CardSubmitted
 class MainActivity : AppCompatActivity() {
     private lateinit var binding: ActivityMainBinding
     private lateinit var cards: MutableList<CardDataModel>
+    private lateinit var addedCardsList: MutableList<CardDataModel>
     private val questionButtonText = "Show Answer"
     private val answerButtonText = "Return To Question"
     private var index = 0
@@ -24,11 +26,11 @@ class MainActivity : AppCompatActivity() {
 
         cards = getCardsList(this).toMutableList()
 
-        initBinding()
+        showCurrentCard()
         initClickListeners()
     }
 
-    private fun initBinding() {
+    private fun showCurrentCard() {
         binding.cardText.text = cards[index].question
         if (binding.cardText.text == cards[index].question) {
             binding.cardButton.text = questionButtonText
@@ -73,19 +75,27 @@ class MainActivity : AppCompatActivity() {
 
     private fun addButton() {
         binding.addButton.setOnClickListener {
+
             val addFragment = AddFragment()
             addFragment.show(supportFragmentManager, "Add")
 
             addFragment.cardSubmitted = object : CardSubmitted {
                 override fun onCardSubmitted(card: CardDataModel) {
-                    cards.add(0, card)
-                    index = 0
+                    addedCardsList = mutableListOf()
+                    addedCardsList.add(0, card)
+
+                    for (i in 0 until cards.size){
+                        addedCardsList.add((i+1), cards[i])
+                    }
+
+                    cards = addedCardsList
+                    showCurrentCard()
                 }
             }
         }
     }
 
-    private fun cardButton(){
+    private fun cardButton() {
         binding.cardButton.setOnClickListener {
             flipCard()
         }
