@@ -5,6 +5,8 @@ import androidx.appcompat.app.AppCompatActivity
 import com.CodeAlpha.codealpha_task1.CardsDataSource.getCardsList
 import com.CodeAlpha.codealpha_task1.databinding.ActivityMainBinding
 import com.CodeAlpha.codealpha_task1.models.CardDataModel
+import com.CodeAlpha.codealpha_task1.ui.add_fragment.AddFragment
+import com.CodeAlpha.codealpha_task1.ui.add_fragment.CardSubmitted
 
 class MainActivity : AppCompatActivity() {
     private lateinit var binding: ActivityMainBinding
@@ -13,6 +15,7 @@ class MainActivity : AppCompatActivity() {
     private val answerButtonText = "Return To Question"
     private var index = 0
     private var isCardFlipped = false
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
 
@@ -35,8 +38,18 @@ class MainActivity : AppCompatActivity() {
     }
 
     private fun initClickListeners() {
+        nextButton()
+
+        previousButton()
+
+        addButton()
+
+        cardButton()
+    }
+
+    private fun nextButton() {
         binding.nextButton.setOnClickListener {
-            if (binding.cardText.text == cards[(cards.size - 1)].question) {
+            if (index == cards.size - 1) {
                 return@setOnClickListener
             } else if (isCardFlipped) {
                 flipCard()
@@ -44,9 +57,11 @@ class MainActivity : AppCompatActivity() {
             binding.cardText.text = cards[index + 1].question
             index++
         }
+    }
 
+    private fun previousButton() {
         binding.previousButton.setOnClickListener {
-            if (binding.cardText.text == cards[0].question) {
+            if (index == 0) {
                 return@setOnClickListener
             } else if (isCardFlipped) {
                 flipCard()
@@ -54,17 +69,29 @@ class MainActivity : AppCompatActivity() {
             binding.cardText.text = cards[(index - 1)].question
             index--
         }
+    }
 
+    private fun addButton() {
         binding.addButton.setOnClickListener {
-            AddFragment().show(supportFragmentManager, "Add")
-        }
+            val addFragment = AddFragment()
+            addFragment.show(supportFragmentManager, "Add")
 
+            addFragment.cardSubmitted = object : CardSubmitted {
+                override fun onCardSubmitted(card: CardDataModel) {
+                    cards.add(0, card)
+                    index = 0
+                }
+            }
+        }
+    }
+
+    private fun cardButton(){
         binding.cardButton.setOnClickListener {
             flipCard()
         }
     }
 
-    fun animationEffect() {
+    private fun animationEffect() {
         binding.card.animate().apply {
             duration = 1000
             rotationYBy(180f)
@@ -73,7 +100,7 @@ class MainActivity : AppCompatActivity() {
         }.start()
     }
 
-    fun flipCard() {
+    private fun flipCard() {
         if (!isCardFlipped) {
             isCardFlipped = true
             animationEffect()
@@ -86,4 +113,6 @@ class MainActivity : AppCompatActivity() {
             binding.cardButton.text = questionButtonText
         }
     }
+
+
 }

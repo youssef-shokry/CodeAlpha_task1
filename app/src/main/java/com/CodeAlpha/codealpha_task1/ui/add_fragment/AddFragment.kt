@@ -1,14 +1,17 @@
-package com.CodeAlpha.codealpha_task1.ui
+package com.CodeAlpha.codealpha_task1.ui.add_fragment
 
 import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import com.CodeAlpha.codealpha_task1.databinding.FragmentAddBinding
+import com.CodeAlpha.codealpha_task1.models.CardDataModel
 import com.google.android.material.bottomsheet.BottomSheetDialogFragment
 
 class AddFragment : BottomSheetDialogFragment() {
-    lateinit var binding: FragmentAddBinding
+
+    var cardSubmitted: CardSubmitted? = null
+    private lateinit var binding: FragmentAddBinding
     private var answer: String = ""
     private var question: String = ""
 
@@ -16,7 +19,7 @@ class AddFragment : BottomSheetDialogFragment() {
         inflater: LayoutInflater,
         container: ViewGroup?,
         savedInstanceState: Bundle?
-    ): View{
+    ): View {
         binding = FragmentAddBinding.inflate(inflater, container, false)
         return binding.root
     }
@@ -28,9 +31,11 @@ class AddFragment : BottomSheetDialogFragment() {
 
             dismissNow()
         }
+
+        passData()
     }
 
     fun passData(){
-
+        cardSubmitted?.onCardSubmitted(CardDataModel(question, answer))
     }
 }
