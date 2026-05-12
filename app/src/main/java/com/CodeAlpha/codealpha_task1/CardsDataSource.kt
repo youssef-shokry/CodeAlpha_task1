@@ -9,12 +9,6 @@ object CardsDataSource {
     private val answersList: MutableList<String>  = mutableListOf()
     private var isLoaded = false
 
-    private val cardsList: List<Cards> = mutableListOf<Cards>().also { cardsList ->
-        for(i in 0 until answersList.size){
-            cardsList.add(Cards(questionsList[i], answersList[i]))
-        }
-    }.toList()
-
     private fun initCardsList(context: Context){
         if (isLoaded) return
 
@@ -38,6 +32,12 @@ object CardsDataSource {
 
         isLoaded = true
     }
+
+    private val cardsList: List<Cards> = mutableListOf<Cards>().also { cardsList ->
+        for(i in 0 until answersList.size){
+            cardsList.add(Cards(questionsList[i], answersList[i]))
+        }
+    }.toList()
     fun getCardsList(context: Context): List<Cards>{
         initCardsList(context)
         return cardsList
