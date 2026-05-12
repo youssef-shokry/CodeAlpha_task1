@@ -1,16 +1,16 @@
 package com.CodeAlpha.codealpha_task1.ui
 
 import android.os.Bundle
-import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import com.CodeAlpha.codealpha_task1.R
 import com.CodeAlpha.codealpha_task1.databinding.FragmentAddBinding
 import com.google.android.material.bottomsheet.BottomSheetDialogFragment
 
 class AddFragment : BottomSheetDialogFragment() {
     lateinit var binding: FragmentAddBinding
+    private var answer: String = ""
+    private var question: String = ""
 
     override fun onCreateView(
         inflater: LayoutInflater,
@@ -22,6 +22,15 @@ class AddFragment : BottomSheetDialogFragment() {
     }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
+        binding.submitButton.setOnClickListener {
+            question = binding.questionEditTextLayout.editText?.text.toString()
+            answer = binding.answerEditTextLayout.editText?.text.toString()
+
+            dismissNow()
+        }
+    }
+
+    fun passData(){
 
     }
 }
