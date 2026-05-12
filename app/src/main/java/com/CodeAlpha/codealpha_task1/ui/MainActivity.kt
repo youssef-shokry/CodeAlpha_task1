@@ -56,7 +56,7 @@ class MainActivity : AppCompatActivity() {
         }
 
         binding.addButton.setOnClickListener {
-            //TODO make a sheet
+            AddFragment().show(supportFragmentManager, "Add")
         }
 
         binding.cardButton.setOnClickListener {
